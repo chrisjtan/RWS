@@ -3,9 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-info_path = '/home/jt/Projects/RWS/projection_datasets/CORe50/infos.pickle'
+info_path = '../../../projection_datasets/CORe50/infos.pickle'
 infos = np.load(info_path, allow_pickle=True)
-m_path = '/home/jt/Projects/RWS/scripts/CORe50/graph_construction/CORe50_adj_matrix_0.20.pickle'
+m_path = 'CORe50_adj_matrix_0.20.pickle'
 
 # compute sequence category list
 sequence_category_list = [0 for i in range(len(np.unique(infos[:, 1])))]
