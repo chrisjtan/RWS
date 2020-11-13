@@ -15,6 +15,8 @@ adj_matrix = np.load(args.adj_matrix_path, allow_pickle=True)
 distance_matrix = np.load(args.distance_matrix_path, allow_pickle=True)
 infos = np.load(args.info_path, allow_pickle=True)
 
+random.seed(0)
+
 norm_distance_matrix = row_norm_min_max(distance_matrix)
 for row in range(len(norm_distance_matrix)):
     for col in range(len(norm_distance_matrix)):
