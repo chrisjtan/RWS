@@ -3,4 +3,4 @@ python build_graph.py\
   --info_path '../../../projection_datasets/CORe50/infos.pickle'\
   --global_K 300\
   --local_K 10\
-  --lambda_ 0.1
+  --lambda_ 0.2
