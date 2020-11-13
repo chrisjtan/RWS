@@ -202,7 +202,7 @@ def distance_metric_evaluation(distance_matrix, sequence_category_list, beta=1):
     plt.xlabel('Threshold')
     plt.legend()
     plt.savefig('pos_matching.png', bbox_inches='tight', dpi=500)
-    f_score_study(threshes, f_scores, tps)
+    # f_score_study(threshes, f_scores, tps)
     return threshes[np.argmax(f_scores)], max(f_scores)
 
 
