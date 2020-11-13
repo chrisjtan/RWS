@@ -233,3 +233,26 @@ def f_score(tp, fp, fn, beta):
         print('recall: ', recall)
         f_core = (1 + beta ** 2) * (precision * recall) / (beta ** 2 * precision + recall)
     return f_core
+
+
+def row_norm_min_max(matrix):
+    matrix = np.array(matrix)
+    norm_matrix = np.zeros(matrix.shape)
+    for row in range(len(matrix)):
+        max_value = np.max(matrix[row])
+        min_value = np.min(np.where(matrix[row] <= 0, np.inf, matrix[row]))
+        norm_matrix[row] = (matrix[row] - min_value) / (max_value - min_value)
+    return norm_matrix
+
+
+def row_norm(m):
+    m = np.array(m)
+    for row in range(len(m)):
+        row_sum = np.sum(m[row])
+        if row_sum == 0:
+            for col in range(len(m[row])):
+                m[row, col] = 0
+        else:
+            for col in range(len(m[row])):
+                m[row, col] = m[row, col] / row_sum
+    return m
