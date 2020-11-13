@@ -76,4 +76,5 @@ for row in range(len(seq_match_matrix)):
         seq_match_matrix[row, col] = w
         seq_match_matrix[col, row] = w
 
+D.dump('distance_matrix.pickle')
 seq_match_matrix.dump('CORe50_adj_matrix_%.2f.pickle' % args.lambda_)
