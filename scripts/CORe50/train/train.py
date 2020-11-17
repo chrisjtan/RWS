@@ -36,7 +36,7 @@ if __name__ == '__main__':
     margin = args.margin
     projection_net = ProjectionNet().to(device)
     model = TripletNet(projection_net).to(device)
-    model.apply(xavier_initialize)  # apply xavier initialize
+    model.apply(xavier_initialize)
     loss_fn = TripletLossWithConfidence(margin=margin)
     optimizer = torch.optim.SGD(model.parameters(), lr=lr, weight_decay=1e-5)
 
@@ -65,5 +65,6 @@ if __name__ == '__main__':
             if ite % 100 == 0:
                 torch.save(losses, 'logs/losses.pickle')
                 visualization(losses, 'logs/training_viz.png')
-        torch.save(projection_net.state_dict(), 'logs/model_epoch_%03d' % epoch_num)
+        if epoch % 10 == 0:
+            torch.save(projection_net.state_dict(), 'logs/model_epoch_%03d' % epoch_num)
         epoch_num += 1
