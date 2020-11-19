@@ -15,7 +15,7 @@ args = parser.parse_args()
 features = np.load(args.feature_path, allow_pickle=True)
 infos = np.load(args.info_path, allow_pickle=True)
 
-kmeans = KMeans(n_clusters=args.global_K, n_init=10, max_iter=100000, tol=1e-10, random_state=0).\
+kmeans = KMeans(n_clusters=args.global_K, n_init=20, max_iter=100000, tol=1e-10, random_state=1).\
     fit(np.array(features.tolist()))
 C = np.array(kmeans.labels_)  # global clusters
 
@@ -31,6 +31,7 @@ for i in range(len(features)):
 seq_count = len(np.unique(infos[:, 1]))  # num of tracking sequences
 
 D_neg = np.zeros((seq_count, seq_count))  # cost for not matching
+
 for i in range(len(D_neg)):
     for j in range(i + 1, len(D_neg)):
         if i == j:
@@ -58,11 +59,12 @@ seq_feature_matrix = np.array(seq_feature_matrix)
 
 seq_center_matrix = np.array(seq_feature_matrix)
 for row in range(len(seq_feature_matrix)):
-    kmeans = KMeans(n_clusters=args.local_K, n_init=10, max_iter=100000, tol=1e-10, random_state=0).\
+    kmeans = KMeans(n_clusters=args.local_K, n_init=20, max_iter=100000, tol=1e-10, random_state=1).\
         fit(np.array(seq_feature_matrix[row]))
     seq_center_matrix[row] = kmeans.cluster_centers_
 
 D = np.zeros((seq_count, seq_count))
+
 for row in range(len(D)):
     for col in range(row+1, len(D[row])):
         D[row, col] = clustering_n_matching(seq_center_matrix[row], seq_center_matrix[col])
