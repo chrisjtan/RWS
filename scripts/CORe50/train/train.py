@@ -65,6 +65,6 @@ if __name__ == '__main__':
             if ite % 100 == 0:
                 torch.save(losses, 'logs/losses.pickle')
                 visualization(losses, 'logs/training_viz.png')
-        if epoch % 10 == 0:
+        if epoch % 1 == 0:
             torch.save(projection_net.state_dict(), 'logs/model_epoch_%03d' % epoch_num)
         epoch_num += 1
