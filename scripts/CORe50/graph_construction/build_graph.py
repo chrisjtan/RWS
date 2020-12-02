@@ -15,10 +15,24 @@ args = parser.parse_args()
 features = np.load(args.feature_path, allow_pickle=True)
 infos = np.load(args.info_path, allow_pickle=True)
 
-kmeans = KMeans(n_clusters=args.global_K, n_init=20, max_iter=100000, tol=1e-10, random_state=1).\
+kmeans = KMeans(n_clusters=args.global_K, n_init=5, max_iter=100000, tol=1e-10, random_state=56).\
     fit(np.array(features.tolist()))
 C = np.array(kmeans.labels_)  # global clusters
-
+TP = 0
+FP = 0
+FN = 0
+for i in range(len(features)):
+    for j in range(i + 1, len(features)):
+        if infos[i, 1] == infos[j, 1]:
+            continue
+        if C[i] == C[j] and infos[i, 2] == infos[j, 2]:
+            TP += 1
+        if C[i] == C[j] and infos[i, 2] != infos[j, 2]:
+            FP += 1
+        if C[i] != C[j] and infos[i, 2] == infos[j, 2]:
+            FN += 1
+f_s = f_score(TP, FP, FN, 0.1)
+print('f:', f_s)
 frame_match_matrix = np.zeros((len(features), len(features)))
 for i in range(len(features)):
     for j in range(i + 1, len(features)):
@@ -59,7 +73,7 @@ seq_feature_matrix = np.array(seq_feature_matrix)
 
 seq_center_matrix = np.array(seq_feature_matrix)
 for row in range(len(seq_feature_matrix)):
-    kmeans = KMeans(n_clusters=args.local_K, n_init=20, max_iter=100000, tol=1e-10, random_state=1).\
+    kmeans = KMeans(n_clusters=args.local_K, n_init=10, max_iter=100000, tol=1e-10, random_state=1).\
         fit(np.array(seq_feature_matrix[row]))
     seq_center_matrix[row] = kmeans.cluster_centers_
 
@@ -69,6 +83,7 @@ for row in range(len(D)):
     for col in range(row+1, len(D[row])):
         D[row, col] = clustering_n_matching(seq_center_matrix[row], seq_center_matrix[col])
         D[col, row] = D[row, col]
+
 
 seq_match_matrix = np.zeros((seq_count, seq_count))
 
