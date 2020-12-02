@@ -1,6 +1,5 @@
 # A Self supervised Learning System for Object Detection in Videos Using Random Walks on Graphs
-This is the official webpage for our paper "A Self supervised Learning System for Object Detection in Videos Using Random Walks on Graphs"
----
+
 ##Overall
 This code is a pytorch implementation of the unsupervised object detection method introduced in our paper 
 "A Self supervised Learning System for Object Detection in Videos Using Random Walks 
