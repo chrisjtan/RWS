@@ -55,16 +55,13 @@ if __name__ == '__main__':
             c_batch = c_batch.to(device)
             x_pred, p_pred, n_pred = model(x_batch, p_batch, n_batch)
             loss = loss_fn(x_pred, p_pred, n_pred, c_batch)
-
-            if ite % 10000 == 0:
-                losses.append(loss)
             loss.backward()
             optimizer.step()
             ite += 1
             optimizer.zero_grad()
             if ite % 100 == 0:
+                losses.append(loss)
                 torch.save(losses, 'logs/losses.pickle')
                 visualization(losses, 'logs/training_viz.png')
-        if epoch % 1 == 0:
-            torch.save(projection_net.state_dict(), 'logs/model_epoch_%03d' % epoch_num)
+        torch.save(projection_net.state_dict(), 'logs/projection.model')
         epoch_num += 1
