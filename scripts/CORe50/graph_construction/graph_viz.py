@@ -5,7 +5,7 @@ import os
 
 info_path = '../../../projection_datasets/CORe50/infos.pickle'
 infos = np.load(info_path, allow_pickle=True)
-m_path = 'CORe50_adj_matrix_0.20.pickle'
+m_path = 'CORe50_adj_matrix_0.10.pickle'
 
 # compute sequence category list
 sequence_category_list = [0 for i in range(len(np.unique(infos[:, 1])))]
@@ -47,7 +47,7 @@ pos = nx.kamada_kawai_layout(G)
 
 plt.figure(figsize=(20, 20))
 plt.plot()
-plt.title('YCB Video lambda:%.2f  TP:%d  FP:%d' % (lam, TP, FP), fontsize=12)
+plt.title('CORe50 lambda:%.2f  TP:%d  FP:%d' % (lam, TP, FP), fontsize=12)
 nx.draw(G, labels=labels, edge_color=colors, node_size=300, font_size=20)
-plt.savefig('YCB_Video_%.2f___.png' % lam)
+plt.savefig('CORe50_%.2f___.png' % lam)
 plt.clf()
