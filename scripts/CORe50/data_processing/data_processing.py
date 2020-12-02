@@ -37,7 +37,6 @@ for tracking_folder in sorted(os.listdir(args.data_path), key=lambda f: int(''.j
     gt_category = int((int(tracking_folder.split('o')[-1]) - 1) / 5)
     for im_name in sorted(os.listdir(os.path.join(args.data_path, tracking_folder))):
         segment = Image.open(os.path.join(args.data_path, tracking_folder, im_name))
-        segment = segment.resize((224, 224))
         segment.save("../../../projection_datasets/CORe50/segments/segment_%06d.png" % seg_num)
         preprocess = transforms.Compose([
             transforms.Resize(256),
