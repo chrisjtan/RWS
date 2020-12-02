@@ -62,11 +62,11 @@ def sample_triplet_random_walk(x_index_, sequence_, p_matrix_, n_matrix_, norm_d
         for j in range(p_size):  # sample 5 positive from outer sequences
             p_seq = np.random.choice(np.arange(len(p_matrix_[sequence_])), p=p_matrix_[sequence_])
             p_sequences.append(p_seq)
-        for j in range(p_size):  # sample 5 positive from inner sequence
-            p_sequences.append(sequence)
+        for j in range(20):  # sample 5 positive from inner sequence
+            p_sequences.append(sequence_)
     else:
         for j in range(p_size):
-            p_sequences.append(sequence)
+            p_sequences.append(sequence_)
     # sample negative sequences from outer sequences
     n_sequences = []
     for j in range(n_size):  # sample negative
@@ -76,7 +76,7 @@ def sample_triplet_random_walk(x_index_, sequence_, p_matrix_, n_matrix_, norm_d
     # sample positive indices
     for s in p_sequences:
         indices_in_s = []  # save indices in current sequence for subsample
-        c = norm_distance_matrix_[s, sequence]  # confidence for negative
+        c = norm_distance_matrix_[s, sequence_]  # confidence for negative
         if c == -1:
             c = 0
         for index in np.where(infos_[:, 1] == s)[0]:
@@ -88,7 +88,7 @@ def sample_triplet_random_walk(x_index_, sequence_, p_matrix_, n_matrix_, norm_d
     # sample negative indices
     for s in n_sequences:
         indices_in_s = []  # save indices in current sequence for subsample
-        c = norm_distance_matrix_[s, sequence]  # confidence for negative
+        c = norm_distance_matrix_[s, sequence_]  # confidence for negative
         if c == -1:
             print('error')
             break
@@ -116,7 +116,7 @@ for x_index in tqdm.trange(len(infos)):
             norm_distance_matrix,
             infos,
             p_size=10,
-            n_size=5,)
+            n_size=10,)
         for p_n_pair in p_n_pairs:
             triplet_indices.append([x_index, p_n_pair[0], p_n_pair[1], p_n_pair[2]])
 
