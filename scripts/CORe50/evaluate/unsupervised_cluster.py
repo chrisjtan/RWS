@@ -34,16 +34,10 @@ if __name__ == '__main__':
                 new_features.append(new_feature)
         features = np.array(new_features)
 
-
-
     K = len(np.unique(infos[:, 2]))
-    # for cluster_num in tqdm.trange(args.cluster_times):  # clustering 20 time and take mean
-    #     kmeans = KMeans(n_clusters=K, n_init=10, max_iter=100000, tol=1e-10, random_state=np.random.randint(0,10000)).fit(np.array(features.tolist()))
-    #     pre_label_list.append(kmeans.labels_)
     gt_labels = infos[:, 2]
-
     pre_label_list = []
-    kmeans = KMeans(n_clusters=K, n_init=5, max_iter=100000, tol=1e-10, random_state=2).fit(np.array(features.tolist()))
+    kmeans = KMeans(n_clusters=K, n_init=30, max_iter=100000, tol=1e-10, random_state=0).fit(np.array(features.tolist()))
     pre_label_list.append(kmeans.labels_)
     evaluation = cluster_evaluation(gt_labels, pre_label_list)
     print(evaluation)

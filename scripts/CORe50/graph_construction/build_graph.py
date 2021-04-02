@@ -15,7 +15,7 @@ args = parser.parse_args()
 features = np.load(args.feature_path, allow_pickle=True)
 infos = np.load(args.info_path, allow_pickle=True)
 
-kmeans = KMeans(n_clusters=args.global_K, n_init=5, max_iter=100000, tol=1e-10, random_state=56).\
+kmeans = KMeans(n_clusters=args.global_K, n_init=5, max_iter=100000, tol=1e-10, random_state=0).\
     fit(np.array(features.tolist()))
 C = np.array(kmeans.labels_)  # global clusters
 TP = 0
@@ -73,7 +73,7 @@ seq_feature_matrix = np.array(seq_feature_matrix)
 
 seq_center_matrix = np.array(seq_feature_matrix)
 for row in range(len(seq_feature_matrix)):
-    kmeans = KMeans(n_clusters=args.local_K, n_init=10, max_iter=100000, tol=1e-10, random_state=1).\
+    kmeans = KMeans(n_clusters=args.local_K, n_init=10, max_iter=100000, tol=1e-10, random_state=0).\
         fit(np.array(seq_feature_matrix[row]))
     seq_center_matrix[row] = kmeans.cluster_centers_
 
